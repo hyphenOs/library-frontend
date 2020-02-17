@@ -9,6 +9,7 @@ import {
   editBookAPIAction, // Update
   deleteBookAPIAction // Delete
 } from "../actions/booksActions";
+import SearchComponent from "../../../common/components/SearchComponent";
 
 const initialState = {
   open: false,
@@ -84,7 +85,8 @@ class Books extends React.Component {
   render() {
     return (
       <div>
-        <span style={{ float: "right", marginRight: 20 }}>
+        <span style={styles.headerBar}>
+          <SearchComponent searchAPI={this.props.getBooksAPIAction} />
           <Add onClick={() => this.openForm()} />
         </span>
 
@@ -111,6 +113,10 @@ class Books extends React.Component {
     );
   }
 }
+
+const styles = {
+  headerBar: { float: "right", marginRight: 20, display: "flex" }
+};
 
 const mapStateToProps = ({ books }) => {
   return { books };
