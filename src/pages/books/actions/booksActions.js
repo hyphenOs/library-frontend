@@ -2,10 +2,10 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:8000/books/";
 
-export const getBooksAPIAction = () => {
+export const getBooksAPIAction = (searchTerm = "") => {
   return dispatch => {
     axios
-      .get(baseUrl)
+      .get(baseUrl + "?" + searchTerm)
       .then(response => {
         dispatch({ type: "GET_BOOKS", payload: response.data });
       })
