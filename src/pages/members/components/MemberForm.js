@@ -11,10 +11,13 @@ import formValidator from "../../../common/components/FormValidator";
 const initialState = {
   isEditForm: false,
   formData: {
-    title: "",
-    author: "",
-    isbn: "",
-    year: ""
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zip_code: ""
   },
   changedFields: {},
   formErrors: {},
@@ -22,40 +25,28 @@ const initialState = {
 };
 
 const fieldAttributes = {
-  title: {
+  name: {
     required: true,
-    customValidator: value =>
-      value.length > 100
-        ? { helperText: "enter less than 100 characters", error: true }
+    customValidato: value =>
+      value.length > 30
+        ? { helperText: "enter less than 30 characters", error: true }
         : { helperText: "", error: false }
   },
-  author: {
-    required: true,
-    customValidator: value =>
-      value.length > 100
-        ? { helperText: "enter less than 100 characters", error: true }
-        : { helperText: "", error: false }
-  },
-  isbn: {
-    required: true,
-    customValidator: value =>
-      value.length !== 17
-        ? {
-            helperText: "invalid ISBN. valid value is '123-4-56789-012-3'",
-            error: true
-          }
-        : { helperText: "", error: false }
-  },
-  year: {
+  phone: {
     required: true,
     customValidator: value =>
       isNaN(value)
-        ? { helperText: "Invalid Year", error: true }
+        ? { helperText: "Invalid Phone Number", error: true }
         : { helperText: "", error: false }
-  }
+  },
+  email: { required: true },
+  address: { required: true },
+  city: { required: true },
+  state: { required: true },
+  zip_code: { required: true }
 };
 
-class BookForm extends React.Component {
+class MemberForm extends React.Component {
   constructor(props) {
     super(props);
     let isEditForm = Boolean(Object.keys(this.props.formData).length);
@@ -96,8 +87,11 @@ class BookForm extends React.Component {
     this.setState({ formErrors });
     if (errorCount === 0) {
       this.state.isEditForm
-        ? this.props.editBook(this.state.formData.id, this.state.changedFields)
-        : this.props.addBook(this.state.formData);
+        ? this.props.editMember(
+            this.state.formData.id,
+            this.state.changedFields
+          )
+        : this.props.addMember(this.state.formData);
     }
   };
 
@@ -131,55 +125,84 @@ class BookForm extends React.Component {
   };
 
   render() {
-    const { title, author, isbn, year } = this.state.formData;
+    const { name, phone, email, address, city, state, zip_code } = this.state.formData;
     return (
       <div>
-        {/* Dialog Form */}
         <Dialog open={this.props.open} onClose={this.props.closeForm}>
-          <DialogTitle>Book Form</DialogTitle>
+          <DialogTitle>Member Form</DialogTitle>
 
           <DialogContent>
-            <form id="bookForm">
+            <form id="memberForm">
               <TextField
-                id="title"
-                value={title}
+                id="name"
+                value={name}
                 onChange={this.onChangeHandler}
-                label="Title"
+                label="Name"
                 fullWidth
                 margin="dense"
-                error={this.fieldError("title")}
-                helperText={this.fieldHelperText("title")}
+                error={this.fieldError("name")}
+                helperText={this.fieldHelperText("name")}
                 autoFocus
               />
               <TextField
-                id="author"
-                value={author}
+                id="phone"
+                value={phone}
                 onChange={this.onChangeHandler}
-                label="Author"
+                label="Phone"
                 fullWidth
                 margin="dense"
-                error={this.fieldError("author")}
-                helperText={this.fieldHelperText("author")}
+                error={this.fieldError("phone")}
+                helperText={this.fieldHelperText("phone")}
               />
               <TextField
-                id="isbn"
-                value={isbn}
+                id="email"
+                value={email}
                 onChange={this.onChangeHandler}
-                label="ISBN"
+                label="Email"
                 fullWidth
                 margin="dense"
-                error={this.fieldError("isbn")}
-                helperText={this.fieldHelperText("isbn")}
+                error={this.fieldError("email")}
+                helperText={this.fieldHelperText("email")}
               />
               <TextField
-                id="year"
-                value={year}
+                id="address"
+                value={address}
                 onChange={this.onChangeHandler}
-                label="Year"
+                label="Address"
                 fullWidth
                 margin="dense"
-                error={this.fieldError("year")}
-                helperText={this.fieldHelperText("year")}
+                error={this.fieldError("address")}
+                helperText={this.fieldHelperText("address")}
+              />
+              <TextField
+                id="city"
+                value={city}
+                onChange={this.onChangeHandler}
+                label="City"
+                fullWidth
+                margin="dense"
+                error={this.fieldError("city")}
+                helperText={this.fieldHelperText("city")}
+              />
+              <TextField
+                id="state"
+                value={state}
+                onChange={this.onChangeHandler}
+                label="State"
+                fullWidth
+                margin="dense"
+                error={this.fieldError("state")}
+                helperText={this.fieldHelperText("state")}
+              />
+              <TextField
+                id="zip_code"
+                value={zip_code}
+                onChange={this.onChangeHandler}
+                label="Zip Code"
+                fullWidth
+                margin="dense"
+                error={this.fieldError("zip_code")}
+                helperText={this.fieldHelperText("zip_code")}
               />
               <Button
                 color="primary"
@@ -187,7 +210,7 @@ class BookForm extends React.Component {
                 variant="contained"
               >
               {this.state.isEditForm ? "Edit " : "Add "}
-                Book
+                Member
               </Button>
             </form>
           </DialogContent>
@@ -197,4 +220,4 @@ class BookForm extends React.Component {
   }
 }
 
-export default BookForm;
+export default MemberForm;
