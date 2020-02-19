@@ -7,7 +7,8 @@ import {
   TableCell,
   TableRow,
   TableContainer,
-  Paper
+  Paper,
+  Button
 } from "@material-ui/core";
 import { Edit, Delete } from "@material-ui/icons";
 
@@ -42,10 +43,14 @@ class MemberTable extends React.Component {
                 <TableCell>{row.state}</TableCell>
                 <TableCell>{row.zip_code}</TableCell>
                 <TableCell>
-                  <Edit onClick={() => this.props.showEditForm(row)} />
+                  <Button onClick={() => this.props.showEditForm(row)}>
+                    <Edit />
+                  </Button>
                 </TableCell>
                 <TableCell>
-                  <Delete onClick={() => this.props.performDelete(row.id)} />
+                  <Button onClick={() => this.props.performDelete(row.id)}>
+                    <Delete />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
