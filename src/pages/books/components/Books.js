@@ -10,6 +10,7 @@ import {
   deleteBookAPIAction // Delete
 } from "../actions/booksActions";
 import SearchBar from "../../../common/components/SearchBar";
+import CSVDownloader from "../../../common/components/CSVDownloader";
 
 const initialState = {
   open: false,
@@ -87,6 +88,7 @@ class Books extends React.Component {
       <div>
         <span style={styles.headerBar}>
           <SearchBar searchAPI={this.props.getBooksAPIAction} />
+          <CSVDownloader data={this.props.books} />
           <Add onClick={() => this.openForm()} />
         </span>
 

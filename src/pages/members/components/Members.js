@@ -10,6 +10,7 @@ import {
   deleteMemberAPIAction // Delete
 } from "../actions/membersActions";
 import SearchBar from "../../../common/components/SearchBar";
+import CSVDownloader from "../../../common/components/CSVDownloader";
 
 const initialState = {
   open: false,
@@ -87,6 +88,7 @@ class Members extends React.Component {
       <div>
         <span style={styles.headerBar}>
           <SearchBar searchAPI={this.props.getMembersAPIAction} />
+          <CSVDownloader data={this.props.members}/>
           <Add onClick={() => this.openForm()} />
         </span>
 
