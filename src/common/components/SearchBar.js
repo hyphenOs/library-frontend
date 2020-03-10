@@ -1,6 +1,6 @@
 import React from "react";
 
-class SearchComponent extends React.Component {
+class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,9 +18,9 @@ class SearchComponent extends React.Component {
 
   render() {
     return (
-      <div className={styles.searchBar}>
+      <div>
         <input
-          placeholder="title=abc&year=123"
+          placeholder="key1=value1&key2=value2"
           onChange={this.onChangeHandler}
         />
         <input type="button" value="Search" onClick={this.search} />
@@ -29,8 +29,4 @@ class SearchComponent extends React.Component {
   }
 }
 
-export default SearchComponent;
-
-const styles = {
-  searchBar: {}
-};
+export default SearchBar;

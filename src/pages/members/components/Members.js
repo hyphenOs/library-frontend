@@ -1,44 +1,44 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Add } from "@material-ui/icons";
-import BookTable from "./BookTable";
-import BookForm from "./BookForm";
+import MemberTable from "./MemberTable";
+import MemberForm from "./MemberForm";
 import {
-  addBookAPIAction, // Create
-  getBooksAPIAction, // Retrieve
-  editBookAPIAction, // Update
-  deleteBookAPIAction // Delete
-} from "../actions/booksActions";
+  addMemberAPIAction, // Create
+  getMembersAPIAction, // Retrieve
+  editMemberAPIAction, // Update
+  deleteMemberAPIAction // Delete
+} from "../actions/membersActions";
 import SearchBar from "../../../common/components/SearchBar";
 import CSVDownloader from "../../../common/components/CSVDownloader";
 
 const initialState = {
   open: false,
-  bookData: {},
+  memberData: {},
   error: null
 };
 
-class Books extends React.Component {
+class Members extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    this.props.getBooksAPIAction();
+    this.props.getMembersAPIAction();
   }
 
-  openForm = (bookData = {}) => {
-    this.setState({ open: true, bookData });
+  openForm = (memberData = {}) => {
+    this.setState({ open: true, memberData });
   };
 
   closeForm = () => {
     this.setState({ ...initialState });
   };
 
-  addBook = bookData => {
-    addBookAPIAction(
-      bookData,
+  addMember = memberData => {
+    addMemberAPIAction(
+      memberData,
       successResponse => {
-        alert("Book Created Successfully");
-        this.props.getBooksAPIAction();
+        alert("Member Created Successfully");
+        this.props.getMembersAPIAction();
         this.closeForm();
       },
       errorResponse => {
@@ -48,19 +48,19 @@ class Books extends React.Component {
     );
   };
 
-  editBook = (bookId, bookData) => {
+  editMember = (memberId, memberData) => {
     // close form if fields unchanged
-    if (!Object.keys(bookData).length) {
+    if (!Object.keys(memberData).length) {
       this.closeForm();
       return;
     }
 
-    editBookAPIAction(
-      bookId,
-      bookData,
+    editMemberAPIAction(
+      memberId,
+      memberData,
       successResponse => {
-        alert("Book Updated Successfully");
-        this.props.getBooksAPIAction();
+        alert("Member Updated Successfully");
+        this.props.getMembersAPIAction();
         this.closeForm();
       },
       errorResponse => {
@@ -70,12 +70,12 @@ class Books extends React.Component {
     );
   };
 
-  deleteBook = bookId => {
-    deleteBookAPIAction(
-      bookId,
+  deleteMember = memberId => {
+    deleteMemberAPIAction(
+      memberId,
       successResponse => {
-        alert("Book Deleted Successfully");
-        this.props.getBooksAPIAction();
+        alert("Member Deleted Successfully");
+        this.props.getMembersAPIAction();
       },
       errorResponse => {
         console.log(errorResponse);
@@ -87,29 +87,29 @@ class Books extends React.Component {
     return (
       <div>
         <span style={styles.headerBar}>
-          <SearchBar searchAPI={this.props.getBooksAPIAction} />
-          <CSVDownloader data={this.props.books} />
+          <SearchBar searchAPI={this.props.getMembersAPIAction} />
+          <CSVDownloader data={this.props.members}/>
           <Add onClick={() => this.openForm()} />
         </span>
 
         {/* FORM (Details View) */}
         {this.state.open ? (
-          <BookForm
+          <MemberForm
             open={this.state.open}
             closeForm={this.closeForm}
-            formData={this.state.bookData}
-            addBook={this.addBook}
-            editBook={this.editBook}
+            formData={this.state.memberData}
+            addMember={this.addMember}
+            editMember={this.editMember}
             error={this.state.error}
           />
         ) : null}
 
         {/* TABLE (List View) */}
-        <h2>Books</h2>
-        <BookTable
-          books={this.props.books}
+        <h2>Members</h2>
+        <MemberTable
+          members={this.props.members}
           showEditForm={this.openForm}
-          performDelete={this.deleteBook}
+          performDelete={this.deleteMember}
         />
       </div>
     );
@@ -120,10 +120,10 @@ const styles = {
   headerBar: { float: "right", marginRight: 20, display: "flex" }
 };
 
-const mapStateToProps = ({ books }) => {
-  return { books };
+const mapStateToProps = ({ members }) => {
+  return { members };
 };
 
-const mapDispatchToProps = { getBooksAPIAction };
+const mapDispatchToProps = { getMembersAPIAction };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Books);
+export default connect(mapStateToProps, mapDispatchToProps)(Members);
