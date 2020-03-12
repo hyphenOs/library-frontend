@@ -21,8 +21,10 @@ const initialState = {
   error: null
 };
 
-const fieldAttributes = {
+const apiToFormFieldIDs = {
   title: {
+    key: "title",
+    editable: true,
     required: true,
     customValidator: value =>
       value.length > 100
@@ -30,6 +32,8 @@ const fieldAttributes = {
         : { helperText: "", error: false }
   },
   author: {
+    key: "author",
+    editable: true,
     required: true,
     customValidator: value =>
       value.length > 100
@@ -37,6 +41,8 @@ const fieldAttributes = {
         : { helperText: "", error: false }
   },
   isbn: {
+    key: "isbn",
+    editable: false,
     required: true,
     customValidator: value =>
       value.length !== 17
@@ -47,6 +53,8 @@ const fieldAttributes = {
         : { helperText: "", error: false }
   },
   year: {
+    key: "year",
+    editable: true,
     required: true,
     customValidator: value =>
       isNaN(value)
@@ -90,8 +98,9 @@ class BookForm extends React.Component {
 
   onSubmit = () => {
     const { formErrors, errorCount } = formValidator(
-      fieldAttributes,
-      this.state.formData
+      apiToFormFieldIDs,
+      this.state.formData,
+      this.state.isEditForm
     );
     this.setState({ formErrors });
     if (errorCount === 0) {
@@ -170,6 +179,7 @@ class BookForm extends React.Component {
                 margin="dense"
                 error={this.fieldError("isbn")}
                 helperText={this.fieldHelperText("isbn")}
+                disabled={this.state.isEditForm}
               />
               <TextField
                 id="year"
@@ -186,7 +196,7 @@ class BookForm extends React.Component {
                 onClick={this.onSubmit}
                 variant="contained"
               >
-              {this.state.isEditForm ? "Edit " : "Add "}
+                {this.state.isEditForm ? "Edit " : "Add "}
                 Book
               </Button>
             </form>
