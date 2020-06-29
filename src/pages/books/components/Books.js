@@ -4,9 +4,9 @@ import { Add } from "@material-ui/icons";
 import BookTable from "./BookTable";
 import BookForm from "./BookForm";
 import {
-  addBookAPIAction, // Create
-  getBooksAPIAction, // Retrieve
-  editBookAPIAction, // Update
+  createBookAPIAction, // Create
+  retrieveBooksAPIAction, // Retrieve
+  updateBookAPIAction, // Update
   deleteBookAPIAction, // Delete
 } from "../actions/booksActions";
 import SearchBar from "../../../common/components/SearchBar";
@@ -22,9 +22,66 @@ class Books extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    // Retrieve books when the component is mounted
-    this.props.getBooksAPIAction(); // Retrieve
+    this.retrieve(); // Retrieve books when the component is mounted
   }
+
+  // CRUD Actions
+
+  create = (bookData) => {
+    this.props.createBookAPIAction(
+      bookData,
+      (successResponse) => {
+        alert("Book Created Successfully");
+        this.retrieve();
+        this.closeForm();
+      },
+      (errorResponse) => {
+        console.log(errorResponse);
+        this.setState({ error: errorResponse });
+      }
+    );
+  };
+
+  retrieve = () => {
+    this.props.retrieveBooksAPIAction();
+  };
+
+  update = (bookId, bookData) => {
+    // close form if fields unchanged
+    if (!Object.keys(bookData).length) {
+      this.closeForm();
+      return;
+    }
+
+    this.props.updateBookAPIAction(
+      // Edit
+      bookId,
+      bookData,
+      (successResponse) => {
+        alert("Book Updated Successfully");
+        this.retrieve();
+        this.closeForm();
+      },
+      (errorResponse) => {
+        console.log(errorResponse);
+        this.setState({ error: errorResponse });
+      }
+    );
+  };
+
+  delete = (bookId) => {
+    this.props.deleteBookAPIAction(
+      // Delete
+      bookId,
+      (successResponse) => {
+        alert("Book Deleted Successfully");
+        this.retrieve();
+      },
+      (errorResponse) => {
+        console.log(errorResponse);
+      }
+    );
+  };
 
   openForm = (bookData = {}) => {
     this.setState({ open: true, bookData });
@@ -34,64 +91,11 @@ class Books extends React.Component {
     this.setState({ ...initialState });
   };
 
-  addBook = (bookData) => {
-    this.props.addBookAPIAction(
-      // Create
-      bookData,
-      (successResponse) => {
-        alert("Book Created Successfully");
-        this.props.getBooksAPIAction();
-        this.closeForm();
-      },
-      (errorResponse) => {
-        console.log(errorResponse);
-        this.setState({ error: errorResponse });
-      }
-    );
-  };
-
-  editBook = (bookId, bookData) => {
-    // close form if fields unchanged
-    if (!Object.keys(bookData).length) {
-      this.closeForm();
-      return;
-    }
-
-    this.props.editBookAPIAction(
-      // Edit
-      bookId,
-      bookData,
-      (successResponse) => {
-        alert("Book Updated Successfully");
-        this.props.getBooksAPIAction();
-        this.closeForm();
-      },
-      (errorResponse) => {
-        console.log(errorResponse);
-        this.setState({ error: errorResponse });
-      }
-    );
-  };
-
-  deleteBook = (bookId) => {
-    this.props.deleteBookAPIAction(
-      // Delete
-      bookId,
-      (successResponse) => {
-        alert("Book Deleted Successfully");
-        this.props.getBooksAPIAction();
-      },
-      (errorResponse) => {
-        console.log(errorResponse);
-      }
-    );
-  };
-
   render() {
     return (
       <div>
         <span style={styles.headerBar}>
-          <SearchBar searchAPI={this.props.getBooksAPIAction} />
+          <SearchBar searchAPI={this.props.retrieveBooksAPIAction} />
           <CSVDownloader data={this.props.books} />
           <Add onClick={() => this.openForm()} />
         </span>
@@ -102,8 +106,8 @@ class Books extends React.Component {
             open={this.state.open}
             closeForm={this.closeForm}
             formData={this.state.bookData}
-            addBook={this.addBook}
-            editBook={this.editBook}
+            create={this.create}
+            update={this.update}
             error={this.state.error}
           />
         ) : null}
@@ -112,8 +116,8 @@ class Books extends React.Component {
         <h2>Books</h2>
         <BookTable
           books={this.props.books}
-          showEditForm={this.openForm}
-          performDelete={this.deleteBook}
+          openForm={this.openForm}
+          delete={this.delete}
         />
       </div>
     );
@@ -131,9 +135,9 @@ const mapStateToProps = ({ books }) => {
 // add,edit, delete actions need not be passed through dispatch
 // TODO: understand implications, if any
 const mapDispatchToProps = {
-  addBookAPIAction,
-  getBooksAPIAction,
-  editBookAPIAction,
+  createBookAPIAction,
+  retrieveBooksAPIAction,
+  updateBookAPIAction,
   deleteBookAPIAction,
 };
 

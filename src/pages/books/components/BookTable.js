@@ -37,12 +37,12 @@ class BookTable extends React.Component {
                   <TableCell>{row.isbn}</TableCell>
                   <TableCell>{row.year}</TableCell>
                   <TableCell>
-                    <Button onClick={() => this.props.showEditForm(row)}>
+                    <Button onClick={() => this.props.openForm(row)}>
                       <Edit />
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => this.props.performDelete(row.id)}>
+                    <Button onClick={() => this.props.delete(row.id)}>
                       <Delete />
                     </Button>
                   </TableCell>

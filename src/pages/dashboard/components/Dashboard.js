@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getBooksAPIAction } from "../../books/actions/booksActions";
+import { retrieveBooksAPIAction } from "../../books/actions/booksActions";
 import { getMembersAPIAction } from "../../members/actions/membersActions";
 
 class Dashboard extends React.Component {
   componentDidMount() {
-    this.props.getBooksAPIAction();
+    this.props.retrieveBooksAPIAction();
     this.props.getMembersAPIAction();
   }
   render() {
@@ -24,8 +24,8 @@ class Dashboard extends React.Component {
 const mapStateToProps = ({ books, members }) => {
   return {
     totalBooks: books.length,
-    totalMembers: members.length
+    totalMembers: members.length,
   };
 };
-const mapDispatchToProps = { getBooksAPIAction, getMembersAPIAction };
+const mapDispatchToProps = { retrieveBooksAPIAction, getMembersAPIAction };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

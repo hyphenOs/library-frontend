@@ -105,8 +105,8 @@ class BookForm extends React.Component {
     this.setState({ formErrors });
     if (errorCount === 0) {
       this.state.isEditForm
-        ? this.props.editBook(this.state.formData.id, this.state.changedFields)
-        : this.props.addBook(this.state.formData);
+        ? this.props.update(this.state.formData.id, this.state.changedFields)
+        : this.props.create(this.state.formData);
     }
   };
 
