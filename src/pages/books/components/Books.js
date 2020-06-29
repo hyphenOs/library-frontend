@@ -7,7 +7,7 @@ import {
   addBookAPIAction, // Create
   getBooksAPIAction, // Retrieve
   editBookAPIAction, // Update
-  deleteBookAPIAction // Delete
+  deleteBookAPIAction, // Delete
 } from "../actions/booksActions";
 import SearchBar from "../../../common/components/SearchBar";
 import CSVDownloader from "../../../common/components/CSVDownloader";
@@ -15,14 +15,15 @@ import CSVDownloader from "../../../common/components/CSVDownloader";
 const initialState = {
   open: false,
   bookData: {},
-  error: null
+  error: null,
 };
 
 class Books extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    this.props.getBooksAPIAction();
+    // Retrieve books when the component is mounted
+    this.props.getBooksAPIAction(); // Retrieve
   }
 
   openForm = (bookData = {}) => {
@@ -33,15 +34,16 @@ class Books extends React.Component {
     this.setState({ ...initialState });
   };
 
-  addBook = bookData => {
-    addBookAPIAction(
+  addBook = (bookData) => {
+    this.props.addBookAPIAction(
+      // Create
       bookData,
-      successResponse => {
+      (successResponse) => {
         alert("Book Created Successfully");
         this.props.getBooksAPIAction();
         this.closeForm();
       },
-      errorResponse => {
+      (errorResponse) => {
         console.log(errorResponse);
         this.setState({ error: errorResponse });
       }
@@ -55,29 +57,31 @@ class Books extends React.Component {
       return;
     }
 
-    editBookAPIAction(
+    this.props.editBookAPIAction(
+      // Edit
       bookId,
       bookData,
-      successResponse => {
+      (successResponse) => {
         alert("Book Updated Successfully");
         this.props.getBooksAPIAction();
         this.closeForm();
       },
-      errorResponse => {
+      (errorResponse) => {
         console.log(errorResponse);
         this.setState({ error: errorResponse });
       }
     );
   };
 
-  deleteBook = bookId => {
-    deleteBookAPIAction(
+  deleteBook = (bookId) => {
+    this.props.deleteBookAPIAction(
+      // Delete
       bookId,
-      successResponse => {
+      (successResponse) => {
         alert("Book Deleted Successfully");
         this.props.getBooksAPIAction();
       },
-      errorResponse => {
+      (errorResponse) => {
         console.log(errorResponse);
       }
     );
@@ -117,13 +121,20 @@ class Books extends React.Component {
 }
 
 const styles = {
-  headerBar: { float: "right", marginRight: 20, display: "flex" }
+  headerBar: { float: "right", marginRight: 20, display: "flex" },
 };
 
 const mapStateToProps = ({ books }) => {
   return { books };
 };
 
-const mapDispatchToProps = { getBooksAPIAction };
+// add,edit, delete actions need not be passed through dispatch
+// TODO: understand implications, if any
+const mapDispatchToProps = {
+  addBookAPIAction,
+  getBooksAPIAction,
+  editBookAPIAction,
+  deleteBookAPIAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Books);
