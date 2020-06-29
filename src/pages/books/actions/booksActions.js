@@ -2,20 +2,9 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:8000/books/";
 
-export const getBooksAPIAction = (searchTerm = "") => {
-  return (dispatch) => {
-    axios
-      .get(baseUrl + "?" + searchTerm)
-      .then((response) => {
-        dispatch({ type: "GET_BOOKS", payload: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
+// CRUD API Actions
 
-export const addBookAPIAction = (bookData, successCB, errorCB) => {
+export const createBookAPIAction = (bookData, successCB, errorCB) => {
   return (dispatch) => {
     axios
       .post(baseUrl, bookData)
@@ -28,7 +17,20 @@ export const addBookAPIAction = (bookData, successCB, errorCB) => {
   };
 };
 
-export const editBookAPIAction = (bookId, patchData, successCB, errorCB) => {
+export const retrieveBooksAPIAction = (searchTerm = "") => {
+  return (dispatch) => {
+    axios
+      .get(baseUrl + "?" + searchTerm)
+      .then((response) => {
+        dispatch({ type: "GET_BOOKS", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const updateBookAPIAction = (bookId, patchData, successCB, errorCB) => {
   return (dispatch) => {
     axios
       .patch(baseUrl + bookId + "/", patchData)
