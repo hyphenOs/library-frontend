@@ -150,46 +150,46 @@ class BookForm extends React.Component {
           <DialogContent>
             <form id="bookForm">
               <TextField
-                id="title"
+                id={apiToFormFieldIDs.title.key}
                 value={title}
                 onChange={this.onChangeHandler}
                 label="Title"
                 fullWidth
-                margin="dense"
-                error={this.fieldError("title")}
-                helperText={this.fieldHelperText("title")}
+                margin="normal"
+                error={this.fieldError(apiToFormFieldIDs.title.key)}
+                helperText={this.fieldHelperText(apiToFormFieldIDs.title.key)}
                 autoFocus
               />
               <TextField
-                id="author"
+                id={apiToFormFieldIDs.author.key}
                 value={author}
                 onChange={this.onChangeHandler}
                 label="Author"
                 fullWidth
-                margin="dense"
-                error={this.fieldError("author")}
-                helperText={this.fieldHelperText("author")}
+                margin="normal"
+                error={this.fieldError(apiToFormFieldIDs.author.key)}
+                helperText={this.fieldHelperText(apiToFormFieldIDs.author.key)}
               />
               <TextField
-                id="isbn"
+                id={apiToFormFieldIDs.isbn.key}
                 value={isbn}
                 onChange={this.onChangeHandler}
                 label="ISBN"
                 fullWidth
-                margin="dense"
-                error={this.fieldError("isbn")}
-                helperText={this.fieldHelperText("isbn")}
+                margin="normal"
+                error={this.fieldError(apiToFormFieldIDs.isbn.key)}
+                helperText={this.fieldHelperText(apiToFormFieldIDs.isbn.key)}
                 disabled={this.state.isEditForm}
               />
               <TextField
-                id="year"
+                id={apiToFormFieldIDs.year.key}
                 value={year}
                 onChange={this.onChangeHandler}
                 label="Year"
                 fullWidth
-                margin="dense"
-                error={this.fieldError("year")}
-                helperText={this.fieldHelperText("year")}
+                margin="normal"
+                error={this.fieldError(apiToFormFieldIDs.year.key)}
+                helperText={this.fieldHelperText(apiToFormFieldIDs.year.key)}
               />
               <Button
                 color="primary"

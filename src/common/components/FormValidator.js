@@ -1,21 +1,24 @@
 const formValidator = (apiToFormFieldIDs, userInput, isEditForm) => {
   let formErrors = {};
   for (let field in apiToFormFieldIDs) {
-    if (isEditForm && !apiToFormFieldIDs[field].editable) {
+    let fieldObj = apiToFormFieldIDs[field];
+    if (isEditForm && !fieldObj.editable) {
       continue;
     }
-    let value = userInput[field];
+    let fieldKey = fieldObj.key;
+
+    let value = userInput[fieldKey];
 
     let fieldEmpty = !value;
-    if (fieldEmpty && apiToFormFieldIDs[field].required) {
-      formErrors[field] = {
+    if (fieldEmpty && fieldObj.required) {
+      formErrors[fieldKey] = {
         error: true,
         helperText: "this field should be non-empty"
       };
-    } else if (apiToFormFieldIDs[field].customValidator && !fieldEmpty) {
-      let customValidator = apiToFormFieldIDs[field].customValidator;
+    } else if (fieldObj.customValidator && !fieldEmpty) {
+      let customValidator = fieldObj.customValidator;
       let formError = customValidator(value);
-      if (formError.error) formErrors[field] = formError;
+      if (formError.error) formErrors[fieldKey] = formError;
     }
   }
 
