@@ -1,3 +1,5 @@
+/* Copyright (c) 2020 hyphenOs Software Labs Private Limited */
+
 import React from "react";
 
 class SearchBar extends React.Component {
