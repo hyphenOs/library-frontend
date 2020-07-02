@@ -1,3 +1,5 @@
+/* Copyright (c) 2020 hyphenOs Software Labs Private Limited */
+
 const formValidator = (apiToFormFieldIDs, userInput, isEditForm) => {
   let formErrors = {};
   for (let field in apiToFormFieldIDs) {

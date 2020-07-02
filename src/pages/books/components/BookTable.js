@@ -1,3 +1,5 @@
+/* Copyright (c) 2020 hyphenOs Software Labs Private Limited */
+
 import React from "react";
 import {
   Table,
