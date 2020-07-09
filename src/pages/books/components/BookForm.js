@@ -23,7 +23,7 @@ const initialState = {
   error: null
 };
 
-const apiToFormFieldIDs = {
+const formFieldAttributes = {
   title: {
     key: "title",
     editable: true,
@@ -100,7 +100,7 @@ class BookForm extends React.Component {
 
   onSubmit = () => {
     const { formErrors, errorCount } = formValidator(
-      apiToFormFieldIDs,
+      formFieldAttributes,
       this.state.formData,
       this.state.isEditForm
     );
@@ -152,46 +152,46 @@ class BookForm extends React.Component {
           <DialogContent>
             <form id="bookForm">
               <TextField
-                id={apiToFormFieldIDs.title.key}
+                id={formFieldAttributes.title.key}
                 value={title}
                 onChange={this.onChangeHandler}
                 label="Title"
                 fullWidth
                 margin="normal"
-                error={this.fieldError(apiToFormFieldIDs.title.key)}
-                helperText={this.fieldHelperText(apiToFormFieldIDs.title.key)}
+                error={this.fieldError(formFieldAttributes.title.key)}
+                helperText={this.fieldHelperText(formFieldAttributes.title.key)}
                 autoFocus
               />
               <TextField
-                id={apiToFormFieldIDs.author.key}
+                id={formFieldAttributes.author.key}
                 value={author}
                 onChange={this.onChangeHandler}
                 label="Author"
                 fullWidth
                 margin="normal"
-                error={this.fieldError(apiToFormFieldIDs.author.key)}
-                helperText={this.fieldHelperText(apiToFormFieldIDs.author.key)}
+                error={this.fieldError(formFieldAttributes.author.key)}
+                helperText={this.fieldHelperText(formFieldAttributes.author.key)}
               />
               <TextField
-                id={apiToFormFieldIDs.isbn.key}
+                id={formFieldAttributes.isbn.key}
                 value={isbn}
                 onChange={this.onChangeHandler}
                 label="ISBN"
                 fullWidth
                 margin="normal"
-                error={this.fieldError(apiToFormFieldIDs.isbn.key)}
-                helperText={this.fieldHelperText(apiToFormFieldIDs.isbn.key)}
+                error={this.fieldError(formFieldAttributes.isbn.key)}
+                helperText={this.fieldHelperText(formFieldAttributes.isbn.key)}
                 disabled={this.state.isEditForm}
               />
               <TextField
-                id={apiToFormFieldIDs.year.key}
+                id={formFieldAttributes.year.key}
                 value={year}
                 onChange={this.onChangeHandler}
                 label="Year"
                 fullWidth
                 margin="normal"
-                error={this.fieldError(apiToFormFieldIDs.year.key)}
-                helperText={this.fieldHelperText(apiToFormFieldIDs.year.key)}
+                error={this.fieldError(formFieldAttributes.year.key)}
+                helperText={this.fieldHelperText(formFieldAttributes.year.key)}
               />
               <Button
                 color="primary"
