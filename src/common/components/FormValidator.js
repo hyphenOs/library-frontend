@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 hyphenOs Software Labs Private Limited */
 
-const formValidator = (apiToFormFieldIDs, userInput, isEditForm) => {
+const formValidator = (formFieldAttributes, userInput, isEditForm) => {
   let formErrors = {};
-  for (let field in apiToFormFieldIDs) {
-    let fieldObj = apiToFormFieldIDs[field];
+  for (let field in formFieldAttributes) {
+    let fieldObj = formFieldAttributes[field];
     if (isEditForm && !fieldObj.editable) {
       continue;
     }
