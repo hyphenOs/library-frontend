@@ -26,6 +26,8 @@ class CSVDownloader extends React.Component {
     return new Blob([csvString], { type: "text/csv" });
   };
 
+
+  // Reference: https://developer.mozilla.org/en-US/docs/Web/API/Blob
   serveCSVBlob = csvBlob => {
     const url = URL.createObjectURL(csvBlob);
 
