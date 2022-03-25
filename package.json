@@ -13,7 +13,7 @@
     "http-proxy": "^1.18.1",
     "immer": "^9.0.12",
     "lodash": "^4.17.21",
-    "node-forge": "^1.2.1",
+    "node-forge": "^1.3.0",
     "node-notifier": "^8.0.2",
     "nth-check": "^2.0.1",
     "postcss": "^8.2.13",
